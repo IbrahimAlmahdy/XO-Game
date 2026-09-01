@@ -1,8 +1,51 @@
 let currentPlayer = "X";
-const NumberOfRows = 4;
-const turns = Math.pow(NumberOfRows, 2);
+let NumberOfRows = 3;
+let turns = Math.pow(NumberOfRows, 2);
 let turnsCounter = 0;
+let xScore = 0;
+let oScore = 0;
+let round = 1;
+
+const startButton = document.querySelector("#start");
+const boardSizeInput = document.querySelector("#board-size");
 const resetButton = document.querySelector("#reset");
+const gameTitle = document.querySelector(".game-title");
+const gameSettings = document.querySelector(".game-settings");
+const backHomeButton = document.querySelector("#back-home");
+const scoreboard = document.querySelector(".scoreboard");
+const xScoreElement = document.querySelector("#x-score");
+const oScoreElement = document.querySelector("#o-score");
+const roundElement = document.querySelector("#round");
+
+startButton.onclick = () => {
+  NumberOfRows = Number(boardSizeInput.value);
+  turns = Math.pow(NumberOfRows, 2);
+
+  board = createBoardArray();
+  createBoard();
+
+  gameTitle.style.display = "none";
+  gameSettings.style.display = "none";
+  resetButton.style.display = "block";
+  backHomeButton.style.display = "block";
+  scoreboard.style.display = "flex";
+};
+
+const backToHome = () => {
+  document.querySelector(".board").remove();
+
+  gameSettings.style.display = "flex";
+  gameTitle.style.display = "block";
+  resetButton.style.display = "none";
+  backHomeButton.style.display = "none";
+  scoreboard.style.display = "none";
+
+  currentPlayer = "X";
+  turnsCounter = 0;
+  board = createBoardArray();
+};
+
+backHomeButton.onclick = backToHome;
 
 const createBoardArray = () => {
   let board = [];
@@ -131,6 +174,36 @@ const cellClickHandler = (event, index) => {
     drawMarkInCell(cell, currentPlayer);
 
     if (checkWinner(currentPlayer)) {
+      if (currentPlayer === "X") {
+        xScore++;
+        xScoreElement.textContent = xScore;
+
+        if (xScore === 5) {
+          round++;
+          roundElement.textContent = round;
+
+          xScore = 0;
+          oScore = 0;
+
+          xScoreElement.textContent = xScore;
+          oScoreElement.textContent = oScore;
+        }
+      } else {
+        oScore++;
+        oScoreElement.textContent = oScore;
+
+        if (oScore === 5) {
+          round++;
+          roundElement.textContent = round;
+
+          xScore = 0;
+          oScore = 0;
+
+          xScoreElement.textContent = xScore;
+          oScoreElement.textContent = oScore;
+        }
+      }
+
       runWinEvent(currentPlayer);
     } else {
       turnsCounter === turns && runDrawEvent();
@@ -148,7 +221,7 @@ const createCell = (index) => {
   cellElement.querySelector(".cell").onclick = (event) =>
     cellClickHandler(event, index);
   cellElement.querySelector(".cell").onkeydown = (event) =>
-    event.key === "Enter" ? cellClickHandler(event, i) : true;
+    event.key === "Enter" ? cellClickHandler(event, index) : true;
 
   return cellElement;
 };
@@ -164,8 +237,7 @@ const createBoard = () => {
     board.appendChild(cellElement);
     document.documentElement.style.setProperty("--grid-rows", NumberOfRows);
   }
-  container.insertAdjacentElement("afterbegin", board);
+  scoreboard.insertAdjacentElement("afterend", board);
 };
 
 resetButton.onclick = resetGame;
-createBoard();
