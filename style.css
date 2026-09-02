@@ -227,3 +227,89 @@ body {
 #back-home {
   transition: 0.3s ease;
 }
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+  .board {
+    grid-template-columns: repeat(var(--grid-rows), 80px);
+    grid-template-rows: repeat(var(--grid-rows), 80px);
+    gap: 1rem;
+  }
+
+  .cell {
+    font-size: 2.5em;
+  }
+
+  .players-score {
+    gap: 1rem;
+  }
+
+  .scoreboard div {
+    min-width: 10rem;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.6rem;
+  }
+
+  .round-info > div {
+    min-width: 10rem;
+    padding: 0.8rem 1.2rem;
+    font-size: 1.6rem;
+  }
+
+  .round-info small {
+    font-size: 1.2rem;
+  }
+
+  .game-title {
+    font-size: 2rem;
+  }
+
+  .game-settings {
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .board {
+    width: calc(100vw - 2rem);
+    grid-template-columns: repeat(var(--grid-rows), minmax(0, 1fr));
+    grid-template-rows: repeat(var(--grid-rows), 1fr);
+    gap: 0.8rem;
+  }
+
+  .cell {
+    aspect-ratio: 1 / 1;
+    font-size: 2em;
+  }
+
+  .players-score {
+    gap: 0.8rem;
+  }
+
+  .players-score div {
+    min-width: 9rem;
+    padding: 0.8rem;
+    font-size: 1.4rem;
+  }
+
+  .round-info > div {
+    min-width: 9rem;
+    font-size: 1.4rem;
+  }
+
+  .game-title {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .game-settings {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  #board-size,
+  #start {
+    width: 100%;
+  }
+}
