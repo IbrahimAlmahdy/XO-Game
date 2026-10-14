@@ -4,7 +4,7 @@ A customizable Tic Tac Toe game built with HTML, CSS, and JavaScript.
 
 ## Live Demo
 
-[Play XO Game](https://ibrahim-almahdy.github.io/XO-Game/)
+[Play XO Game](https://IbrahimAlmahdy.github.io/XO-Game/)
 
 ## Features
 
